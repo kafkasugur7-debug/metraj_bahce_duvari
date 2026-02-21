@@ -232,19 +232,39 @@
 
   function ensureAudioCtx() {
     if (audioCtx) return audioCtx;
-    const Ctx = window.AudioContext || window.webkitAudioContext;
+    var Ctx = window.AudioContext || window.webkitAudioContext;
     if (!Ctx) return null;
     audioCtx = new Ctx();
     return audioCtx;
   }
 
+  function resumeAudioCtx() {
+    var ctx = ensureAudioCtx();
+    if (ctx && ctx.state === 'suspended') {
+      ctx.resume().catch(function () {});
+    }
+  }
+
+  document.addEventListener('touchstart', resumeAudioCtx, { once: true });
+  document.addEventListener('touchend', resumeAudioCtx, { once: true });
+  document.addEventListener('click', resumeAudioCtx, { once: true });
+
   function playTone(freq, durationSec, type, gainLevel, startDelaySec) {
-    const ctx = ensureAudioCtx();
+    var ctx = ensureAudioCtx();
     if (!ctx || !state.soundOn) return;
-    if (ctx.state === 'suspended') ctx.resume();
-    const now = ctx.currentTime + (startDelaySec || 0);
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    if (ctx.state === 'suspended') {
+      ctx.resume().then(function () {
+        scheduleTone(ctx, freq, durationSec, type, gainLevel, startDelaySec);
+      }).catch(function () {});
+      return;
+    }
+    scheduleTone(ctx, freq, durationSec, type, gainLevel, startDelaySec);
+  }
+
+  function scheduleTone(ctx, freq, durationSec, type, gainLevel, startDelaySec) {
+    var now = ctx.currentTime + (startDelaySec || 0);
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
     osc.type = type || 'sine';
     osc.frequency.setValueAtTime(freq, now);
     gain.gain.setValueAtTime(0.0001, now);
