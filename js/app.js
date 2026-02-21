@@ -230,6 +230,8 @@
     saveState();
   }
 
+  var audioUnlocked = false;
+
   function ensureAudioCtx() {
     if (audioCtx) return audioCtx;
     var Ctx = window.AudioContext || window.webkitAudioContext;
@@ -238,16 +240,22 @@
     return audioCtx;
   }
 
-  function resumeAudioCtx() {
+  function unlockAudio() {
     var ctx = ensureAudioCtx();
-    if (ctx && ctx.state === 'suspended') {
-      ctx.resume().catch(function () {});
-    }
+    if (!ctx || audioUnlocked) return;
+    if (ctx.state === 'suspended') ctx.resume().catch(function () {});
+    var buf = ctx.createBuffer(1, 1, ctx.sampleRate || 22050);
+    var src = ctx.createBufferSource();
+    src.buffer = buf;
+    src.connect(ctx.destination);
+    src.start(0);
+    src.stop(0);
+    audioUnlocked = true;
   }
 
-  document.addEventListener('touchstart', resumeAudioCtx, { once: true });
-  document.addEventListener('touchend', resumeAudioCtx, { once: true });
-  document.addEventListener('click', resumeAudioCtx, { once: true });
+  document.addEventListener('touchstart', unlockAudio, true);
+  document.addEventListener('touchend', unlockAudio, true);
+  document.addEventListener('click', unlockAudio, true);
 
   function playTone(freq, durationSec, type, gainLevel, startDelaySec) {
     var ctx = ensureAudioCtx();
