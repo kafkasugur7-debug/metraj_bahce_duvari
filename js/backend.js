@@ -35,8 +35,8 @@
 
   function maskStudentNo(no) {
     const raw = String(no || '').trim();
-    if (raw.length <= 4) return raw;
-    return `${raw.slice(0, 2)}***${raw.slice(-2)}`;
+    if (raw.length <= 8) return raw;
+    return `${raw.slice(0, 4)}****${raw.slice(-4)}`;
   }
 
   function loadLocal() {
