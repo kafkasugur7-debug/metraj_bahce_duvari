@@ -1,0 +1,118 @@
+﻿<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metraj Ustası</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="flameBackdrop" class="flame-backdrop"></div>
+  <div id="comboToast" class="combo-toast"></div>
+  <section id="authOverlay" class="auth-overlay">
+    <div class="auth-card">
+      <h2>Oyuna Başla</h2>
+      <p>Takma ad ve öğrenci numarası ile giriş yap.</p>
+      <label for="nicknameInput">Takma ad</label>
+      <input id="nicknameInput" type="text" maxlength="24" />
+      <label for="studentNoInput">Öğrenci numarası</label>
+      <input id="studentNoInput" type="text" maxlength="12" />
+      <p id="authError" class="badge-bad"></p>
+      <button id="authStartBtn" type="button">Başla</button>
+    </div>
+  </section>
+  <main class="app">
+    <header class="top">
+      <h1>Metraj Ustası</h1>
+      <div class="stats">
+        <span id="xp">XP: 0</span>
+        <span id="rank">Rütbe: Çırak</span>
+        <span id="streak">Seri: 0</span>
+        <span id="combo">Kombo: 0</span>
+        <span id="flame" class="flame flame-off">❄️</span>
+      </div>
+    </header>
+
+    <section class="controls card">
+      <label for="levelSelect">Seviye</label>
+      <select id="levelSelect">
+        <option value="1">Seviye 1 - Bahçe Duvarı</option>
+        <option value="2">Seviye 2 - Taş Temel Planı</option>
+      </select>
+      <label for="stepModeToggle">Adım adım çözüm</label>
+      <input id="stepModeToggle" type="checkbox" />
+      <label for="soundToggle">Ses</label>
+      <input id="soundToggle" type="checkbox" checked />
+      <label for="soundProfile">Ses Profili</label>
+      <select id="soundProfile">
+        <option value="classic">Klasik</option>
+        <option value="arcade">Arcade</option>
+        <option value="minimal">Minimal</option>
+      </select>
+      <button id="newQuestionBtn" type="button">Yeni Soru</button>
+      <button id="checkBtn" type="button">Kontrol Et</button>
+    </section>
+
+    <section class="card session">
+      <div class="sessionRow">
+        <span id="round">Tur: 0/10</span>
+        <span id="timer">Süre: 00:00</span>
+        <span id="accuracy">Başarı: %0</span>
+      </div>
+      <div class="progressWrap" aria-label="Tur ilerlemesi">
+        <div id="progressBar"></div>
+      </div>
+    </section>
+
+    <section class="card" id="questionCard">
+      <h2 id="questionTitle"></h2>
+      <p id="questionText"></p>
+      <ul id="questionMeta"></ul>
+    </section>
+
+    <section class="card">
+      <h3>Kesit / Plan</h3>
+      <div id="drawingHost" class="drawing"></div>
+    </section>
+
+    <section class="card">
+      <h3>Cevaplar</h3>
+      <div id="itemsHost"></div>
+      <p class="hint">Tolerans: hacimlerde ±%2 kabul edilir.</p>
+      <p id="result"></p>
+    </section>
+
+    <section class="card">
+      <h3>Değerlendirme</h3>
+      <div id="feedbackHost" class="feedbackList"></div>
+    </section>
+
+    <section class="card">
+      <h3>Hata Isı Haritası</h3>
+      <div id="heatmapHost" class="heatmapList"></div>
+    </section>
+
+    <section class="card">
+      <h3>Liderlik Tablosu</h3>
+      <div class="sessionRow">
+        <button id="lbDailyBtn" type="button">Günlük</button>
+        <button id="lbWeeklyBtn" type="button">Haftalık</button>
+        <button id="lbMonthlyBtn" type="button">Aylık</button>
+      </div>
+      <div id="leaderboardHost" class="feedbackList"></div>
+    </section>
+
+    <section class="card">
+      <h3>Öğrenci Takip</h3>
+      <div id="studentStatsHost" class="feedbackList"></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/backend.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/drawing.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

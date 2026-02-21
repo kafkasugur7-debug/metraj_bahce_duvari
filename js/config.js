@@ -1,0 +1,4 @@
+﻿window.METRAJ_CONFIG = {
+  supabaseUrl: 'https://plccnwkrgzqbhfykrlex.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsY2Nud2tyZ3pxYmhmeWtybGV4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2OTA1NzIsImV4cCI6MjA4NzI2NjU3Mn0.BDUe3F9nHdfsbZpy3Fs8kWoYI9UV7ww3VRrefwDMiwI'
+};
